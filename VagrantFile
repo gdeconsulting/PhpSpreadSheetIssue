@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+
+  # Customize given your local machine resources and required configuration
+  hostname = "example.local"
+  ip = "192.168.33.10"
+  memory = 4096 # memory in GB
+  cpus = 4
+
+  config.vm.box = "debian/stretch64"
+
+   # MacOS setup: require https://github.com/gael-ian/vagrant-bindfs and uncomment the following lines
+   config.vm.network :private_network, ip: ip
+   config.vm.synced_folder "/System/Volumes/Data" + Dir.pwd, "/vagrant", type: 'nfs'
+
+   config.vm.hostname = hostname
+   config.vm.provider "virtualbox" do |virtualbox|
+       virtualbox.memory = memory
+       virtualbox.cpus = cpus
+       virtualbox.name = hostname
+   end
+
+end
